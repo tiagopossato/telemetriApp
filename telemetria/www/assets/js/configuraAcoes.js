@@ -12,22 +12,17 @@ function toggleFullScreen() {
         (!document.mozFullScreen && !document.webkitIsFullScreen)) {
         if (document.documentElement.requestFullScreen) {
             document.documentElement.requestFullScreen();
-        }
-        else if (document.documentElement.mozRequestFullScreen) {
+        } else if (document.documentElement.mozRequestFullScreen) {
             document.documentElement.mozRequestFullScreen();
-        }
-        else if (document.documentElement.webkitRequestFullScreen) {
+        } else if (document.documentElement.webkitRequestFullScreen) {
             document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
         }
-    }
-    else {
+    } else {
         if (document.cancelFullScreen) {
             document.cancelFullScreen();
-        }
-        else if (document.mozCancelFullScreen) {
+        } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
-        }
-        else if (document.webkitCancelFullScreen) {
+        } else if (document.webkitCancelFullScreen) {
             document.webkitCancelFullScreen();
         }
     }
@@ -41,8 +36,8 @@ $(document).ready(function() {
             $("#enviarComandos").show();
             $("#arquivo").val("");
             return;
-        }else{
-            send('2:'+texto);
+        } else {
+            send('2:' + texto);
         }
         $("#arquivo").val("");
     });
@@ -55,6 +50,10 @@ $(document).ready(function() {
     $("#botaoTelaCheia").click(toggleFullScreen);
 
     $("#botaoConectar").click(conecta);
+
+    $("#botaoCancelarConexao").click(function() {
+        ws.close();
+    });
 
     var oldLog = console.log;
     console.log = function(message) {
@@ -69,5 +68,6 @@ $(document).ready(function() {
     };
 
     $("#enviarComandos").hide();
-    //conecta();
+    $(".progress").hide('slow');
+    conecta();
 });

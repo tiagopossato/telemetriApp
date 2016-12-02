@@ -5,29 +5,38 @@ var corrente = 0;
 var velocidade = 0;
 
 function conecta() {
+
     try {
-        ws = new WebSocket('ws://'+$("#ipTelemetria").val()+':81');
-    }
-    catch (err) {
+        ws = new WebSocket('ws://' + $("#ipTelemetria").val() + ':81');
+    } catch (err) {
         console.log(err);
+        return;
     }
+    $("#botaoCancelarConexao").show('slow');
+    $(".progress").show('slow');
     $("#botaoConectar").hide('slow');
     log('Conectando...', true);
 
     ws.onopen = function(e) {
         log('Conectado', true);
-        $("#botaoConectar").hide('slow');
-	send('1:175');
+        $("#botaoCancelarConexao").hide('slow');
+        $(".progress").hide('slow');
+        //$("#botaoConectar").hide('slow');
+        send('1:175');
     };
 
     ws.onclose = function(e) {
         log('Desconectado', true);
         $("#botaoConectar").show('slow');
+        $(".progress").hide('slow');
+        $("#botaoCancelarConexao").hide('slow');
     };
 
     ws.onerror = function(e) {
         log('Erro na conexão!', true);
         $("#botaoConectar").show('slow');
+        $(".progress").hide('slow');
+        $("#botaoCancelarConexao").hide('slow');
     };
     ws.onmessage = function(e) {
         trataDadosRecebidos(e);
@@ -83,11 +92,10 @@ function trataDadosRecebidos(e) {
             //calcula consumo instantâneo
             if (!isNaN(velocidade) && velocidade > 0) {
                 consumoInstantaneo.refresh(tensao * corrente / velocidade);
-		autonomiaInstantanea.refresh(velocidade / (tensao * corrente));
+                autonomiaInstantanea.refresh(velocidade / (tensao * corrente));
             }
         }
-    }
-    catch (err) {
+    } catch (err) {
         log(e.data);
         console.error(err.message);
         return;
@@ -97,13 +105,12 @@ function trataDadosRecebidos(e) {
 function waitForSocketConnection(callback) {
     setTimeout(
         function() {
-            if (ws.readyState === 1) {
-                if (callback !== undefined) {
+            if (ws.readyState == 1) {
+                if (callback != undefined) {
                     callback();
                 }
                 return;
-            }
-            else {
+            } else {
                 waitForSocketConnection(callback);
             }
         }, 5);
