@@ -12,7 +12,7 @@ var server = ws.createServer(function (conn) {
 	try{
 		console.log("Received "+str)
 		var i1 = setInterval(function(){
-			try{conn.sendText("{\"03\":"+getRandomArbitrary(0,50)+"}")}catch(e){clearInterval(i1);console.log(e)}
+			try{conn.sendText("{\"03\":"+getRandomArbitrary(0,100)+"}")}catch(e){clearInterval(i1);console.log(e)}
 			},100);
 		var i2 = setInterval(function(){
 			try{conn.sendText("{\"01\":"+getRandomArbitrary(0,50)+"}")}catch(e){clearInterval(i2);console.log(e)}

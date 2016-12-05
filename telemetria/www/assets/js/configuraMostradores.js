@@ -8,3 +8,15 @@ var autonomiaInstantanea = new Gauge(document.getElementById(
 var temperaturaBaterias = new Gauge(document.getElementById(
   "temperaturaBaterias"));
 var temperaturaCockpit = new Gauge(document.getElementById("temperaturaCockpit"));
+
+var hodometro = new Odometer({
+    el: document.getElementById('hodometro'),
+    format: '( ddd),dd',
+    theme: 'car'
+});
+
+//reescreve função para manter o mesmo nome dos gauges
+var oldHod = hodometro.update;
+hodometro.refresh = function(valor) {
+    oldHod.apply(hodometro, arguments);
+};

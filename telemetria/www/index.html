@@ -10,6 +10,7 @@
     <link href="assets/css/icon.css" rel="stylesheet" type="text/css">
     <link href="bower_components/materialize/dist/css/materialize.min.css" type="text/css" rel="stylesheet">
     <link href="assets/css/style.css" type="text/css" rel="stylesheet">
+    <link href="assets/css/material-gauge.css" type="text/css" rel="stylesheet">
     <link href="bower_components/odometer/themes/odometer-theme-car.css" type="text/css" rel="stylesheet">
     <!--CSS-->
 </head>
@@ -31,7 +32,7 @@
         <div class="col s12 m12 l12">
             <div class="row">
                 <div class="col s6 m6 l6">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col s12 m12 l12">
                             <div class="gauge" id="velocimetro"></div>
                         </div>
@@ -41,35 +42,193 @@
                                 <span>&nbsp m</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- <canvas id="velocimetro"></canvas> -->
+                    <fieldset>
+                        <legend>Velocidade</legend>
+                        <div class="gauge gauge--liveupdate" id="velocimetro">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--spacer"></span>
+                                <span class="gauge__label--high">50</span>
+                            </div>
+                        </div>
+                        <div style="text-align: rigth" class="col l6 m6 s6">
+                            <span id="velocimetroTexto"></span><span> km/h</span>
+                        </div>
+                        <div style="text-align: left" class="col l6 m6 s6">
+                            <div id="hodometro" class="odometer"></div>
+                            <span>&nbsp m</span>
+                        </div>
+                    </fieldset>
+
                 </div>
                 <div class="col s6 m6 l6">
-                    <div class="gauge" id="wattimetro"></div>
+                    <!-- <div class="gauge" id="wattimetro"></div> -->
+                    <fieldset>
+                        <legend>Potência</legend>
+                        <div class="gauge gauge--liveupdate" id="wattimetro">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">1500</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="wattimetroTexto"></span><span> W</span>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         </div>
 
         <div class="col s12 m12 l12">
             <div class="row">
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="medidorTensao"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="medidorTensao"></div> -->
+                    <fieldset>
+                        <legend>Tensão</legend>
+                        <div class="gauge gauge--liveupdate" id="medidorTensao">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">50</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="medidorTensaoTexto"></span><span> V</span>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="medidorCorrente"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="medidorCorrente"></div> -->
+                    <fieldset>
+                        <legend>Corrente</legend>
+                        <div class="gauge gauge--liveupdate" id="medidorCorrente">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">30</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="medidorCorrenteTexto"></span><span> A</span>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="consumoInstantaneo"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="consumoInstantaneo"></div> -->
+                    <fieldset>
+                        <legend>Consumo Instantâneo</legend>
+                        <div class="gauge gauge--liveupdate" id="consumoInstantaneo">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">1500</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="consumoInstantaneoTexto"></span><span> W/km</span>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="autonomiaInstantanea"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="autonomiaInstantanea"></div> -->
+                    <fieldset>
+                        <legend>Autonomia Instantânea</legend>
+                        <div class="gauge gauge--liveupdate" id="autonomiaInstantanea">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">1500</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="autonomiaInstantaneaTexto"></span><span> km/W</span>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="temperaturaBaterias"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="temperaturaBaterias"></div> -->
+                    <fieldset>
+                        <legend>Temp Baterias</legend>
+                        <div class="gauge gauge--liveupdate" id="temperaturaBaterias">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">100</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="temperaturaBateriasTexto"></span><span> ºC</span>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="col s4 m4 l2">
-                    <div class="gauge" id="temperaturaCockpit"></div>
+                <div class="col s6 m6 l4">
+                    <!-- <div class="gauge" id="temperaturaCockpit"></div> -->
+                    <fieldset>
+                        <legend>Temp CockPit</legend>
+                        <div class="gauge gauge--liveupdate" id="temperaturaCockpit">
+                            <div class="gauge__container">
+                                <div class="gauge__marker"></div>
+                                <div class="gauge__background"></div>
+                                <div class="gauge__center"></div>
+                                <div class="gauge__data"></div>
+                                <div class="gauge__needle"></div>
+                            </div>
+                            <div class="gauge__labels mdl-typography__headline">
+                                <span class="gauge__label--low">0</span>
+                                <span class="gauge__label--high">100</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <span id="temperaturaCockpitTexto"></span><span> ºC</span>
+                        </div>
+                    </fieldset>
                 </div>
-
             </div>
         </div>
     </div>
@@ -85,7 +244,7 @@
                                 <span class="card-title">IP da Telemetria</span>
                                 <div class="row">
                                     <!-- <label for="ipTelemetria" style="color: black;">Nome do arquivo</label> -->
-                                    <input style="background-color: gray;" id="ipTelemetria" type="text" value="192.168.4.1">
+                                    <input style="background-color: gray;" id="ipTelemetria" type="text" value="localhost">
                                     <div class="col s12 m12 l6">
                                         <div class="section">
                                             <a type="button" class="col s12 m12 l12 waves-effect waves-light btn" id="botaoConectar">Conectar</a>
@@ -191,8 +350,10 @@
     <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
 
     <!-- JS - JustGage -->
-    <script type="text/javascript" src="bower_components/justgage/justgage.js"></script>
-    <script type="text/javascript" src="bower_components/raphael/raphael.min.js"></script>
+    <!-- <script type="text/javascript" src="bower_components/justgage/justgage.js"></script> -->
+    <!-- <script type="text/javascript" src="bower_components/raphael/raphael.min.js"></script> -->
+
+    <script type="text/javascript" src="assets/js/gauge.min.js"></script>
 
     <!-- JS - Odometro-->
     <script type="text/javascript" src="bower_components/odometer/odometer.min.js"></script>
@@ -202,6 +363,7 @@
         }; // Disables auto-initialization
     </script>
     <!-- JS - Meus Script -->
+    <script type="text/javascript" src="assets/js/material-gauge.js"></script>
 
     <script type="text/javascript" src="assets/js/configuraMostradores.js"></script>
 
