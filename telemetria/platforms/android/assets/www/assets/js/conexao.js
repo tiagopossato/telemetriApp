@@ -1,8 +1,19 @@
 var ws;
 
-var tensao = 0;
-var corrente = 0;
-var velocidade = 0;
+var medicao = {
+    tensao: 0.0,
+    tensaoMaxima: 0.0,
+    tensaoMinima: 500.0,
+    corrente: 0.0,
+    correnteMaxima: 500.0,
+    correnteMinima: 0.0,
+    velocidade: 0.0,
+    velocidadeMaxima: 0.0,
+    velocidadeMinima: 500.0,
+    potencia: 0.0,
+    potenciaMaxima: 0.0,
+    potenciaMinima: 500.0
+};
 
 function conecta() {
 
@@ -56,7 +67,7 @@ function send(msg) {
 
 
 function converte(x, in_min, in_max) {
-    return (x - in_min) * (1 - 0) / (in_max - in_min) + 0;
+    return (x - in_min) * (1.0 - 0.0) / (in_max - in_min) + 0.0;
 }
 
 function trataDadosRecebidos(e) {
@@ -67,24 +78,43 @@ function trataDadosRecebidos(e) {
         log(e.data);
         console.error(err.message);
     }
+
     if (dados['01'] != null) {
-        tensao = parseFloat(dados['01'])
-            // medidorTensao.refresh(tensao);
-        medidorTensao.value(converte(tensao, 0, 50));
-        $('#medidorTensaoTexto').html(tensao);
+        medicao.tensao = parseFloat(dados['01']).toFixed(2);
+
+        if (medicao.tensao > medicao.tensaoMaxima) {
+            medicao.tensaoMaxima = medicao.tensao;
+        }
+        if (medicao.tensao < medicao.tensaoMinima) {
+            medicao.tensaoMinima = medicao.tensao;
+        }
+
+        medidorTensao.value(converte(medicao.tensao, 0.0, 50.0));
+        $('#medidorTensaoTexto').html(parseFloat(medicao.tensao));
     }
     if (dados['02'] != null) {
-        corrente = parseFloat(dados['02']);
-        // medidorCorrente.refresh(corrente);
-        medidorCorrente.value(converte(corrente, 0, 30));
-        $('#medidorCorrenteTexto').html(corrente);
+        medicao.corrente = parseFloat(dados['02']).toFixed(2);
+
+        if (medicao.corrente > medicao.correnteMaxima) {
+            medicao.correnteMaxima = medicao.corrente;
+        }
+        if (medicao.corrente < medicao.correnteMinima) {
+            medicao.correnteMinima = medicao.corrente;
+        }
+        medidorCorrente.value(converte(medicao.corrente, 0.0, 50.0));
+        $('#medidorCorrenteTexto').html(parseFloat(medicao.corrente));
     }
     if (dados['03'] != null) {
-        velocidade = parseInt(dados['03']);
-        //velocimetro.refresh(velocidade);
-        velocimetro.value(converte(velocidade, 0, 50));
-        $('#velocimetroTexto').html(velocidade);
-        // velocimetro.value = velocidade;
+        medicao.velocidade = parseFloat(dados['03']).toFixed(2);
+        if (medicao.velocidade > medicao.velocidadeMaxima) {
+            medicao.velocidadeMaxima = medicao.velocidade;
+        }
+        if (medicao.velocidade < medicao.velocidadeMinima) {
+            medicao.velocidadeMinima = medicao.velocidade;
+        }
+
+        velocimetro.value(converte(medicao.velocidade, 0, 50));
+        $('#velocimetroTexto').html(medicao.velocidade);
     }
     if (dados['04'] != null) {
         var distancia = parseFloat(dados['04']);
@@ -92,14 +122,14 @@ function trataDadosRecebidos(e) {
     }
 
     if (dados['05'] != null) {
-        var temp = parseFloat(dados['05']);
+        var temp = parseFloat(dados['05']).toFixed(2);
         // temperaturaBaterias.refresh(temp);
         temperaturaBaterias.value(converte(temp, 0, 100));
         $('#temperaturaBateriasTexto').html(temp);
     }
 
     if (dados['06'] != null) {
-        var temp = parseFloat(dados['06']);
+        var temp = parseFloat(dados['06']).toFixed(2);
         // temperaturaCockpit.refresh(temp);
         temperaturaCockpit.value(converte(temp, 0, 100));
         $('#temperaturaCockpitTexto').html(temp);
@@ -110,20 +140,28 @@ function trataDadosRecebidos(e) {
     }
 
     //Calcula potencia instantânea
-    if (!isNaN(tensao) && tensao > 0.1 && !isNaN(corrente) && corrente > 0.01) {
-        // wattimetro.refresh(tensao * corrente);
-        wattimetro.value(converte(tensao * corrente, 0, 1500));
-        $('#wattimetroTexto').html(tensao * corrente);
+    if (!isNaN(medicao.tensao) && medicao.tensao > 0.1 && !isNaN(medicao.corrente) && medicao.corrente > 0.01) {
+      medicao.potencia = parseFloat(medicao.tensao * medicao.corrente).toFixed(2);
+
+      if (medicao.potencia > medicao.potenciaMaxima) {
+          medicao.potenciaMaxima = medicao.potencia;
+      }
+      if (medicao.potencia < medicao.potenciaMinima) {
+          medicao.potenciaMinima = medicao.potencia;
+      }
+
+        wattimetro.value(converte(medicao.potencia, 0, 1500));
+        $('#wattimetroTexto').html(medicao.potencia);
         //calcula consumo instantâneo
-        if (!isNaN(velocidade) && velocidade > 0) {
-            // consumoInstantaneo.refresh(tensao * corrente / velocidade);
-            consumoInstantaneo.value(converte((tensao * corrente / velocidade),
+        if (!isNaN(medicao.velocidade) && medicao.velocidade > 0) {
+            // consumoInstantaneo.refresh(tensao * medicao.corrente / velocidade);
+            consumoInstantaneo.value(converte((medicao.potencia / medicao.velocidade),
                 0, 1500));
-            $('#consumoInstantaneoTexto').html(tensao * corrente / velocidade);
-            // autonomiaInstantanea.refresh(velocidade / (tensao * corrente));
-            autonomiaInstantanea.value(converte(velocidade / (tensao * corrente),
+            $('#consumoInstantaneoTexto').html(parseFloat(medicao.potencia / medicao.velocidade).toFixed(2));
+            // autonomiaInstantanea.refresh(velocidade / (tensao * medicao.corrente));
+            autonomiaInstantanea.value(parseFloat(converte(medicao.velocidade / medicao.potencia).toFixed(2),
                 0, 1500));
-            $('#autonomiaInstantaneaTexto').html(velocidade / (tensao * corrente));
+            $('#autonomiaInstantaneaTexto').html(parseFloat(medicao.velocidade / medicao.potencia).toFixed(2));
         }
     }
 }
