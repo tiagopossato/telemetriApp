@@ -48,7 +48,7 @@ $(document).ready(function() {
     });
 
     // $("#botaoTelaCheia").click(toggleFullScreen);
-        $("#botaoZerarEstatisticas").click(medicao.zerarEstatisticas);
+    $("#botaoZerarEstatisticas").click(medicao.zerarEstatisticas);
 
     $("#botaoConectar").click(conecta);
 
