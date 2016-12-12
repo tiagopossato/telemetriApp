@@ -156,7 +156,7 @@
                             </div>
                             <div class="gauge__labels mdl-typography__headline">
                                 <span class="gauge__label--low">0</span>
-                                <span class="gauge__label--high">1500</span>
+                                <span class="gauge__label--high">100</span>
                             </div>
                         </div>
                         <div style="text-align: center">
@@ -178,7 +178,7 @@
                             </div>
                             <div class="gauge__labels mdl-typography__headline">
                                 <span class="gauge__label--low">0</span>
-                                <span class="gauge__label--high">1500</span>
+                                <span class="gauge__label--high">10</span>
                             </div>
                         </div>
                         <div style="text-align: center">
@@ -271,13 +271,17 @@
                     <fieldset>
                         <legend>Velocidade</legend>
                         <div class="row">
-                            <div class="input-field col s12 m6 l6">
+                            <div class="input-field col s12 m4 l4">
                                 <input disabled value="0" id="velocidadeMaxima" type="text" class="validate">
                                 <label for="velocidadeMaxima"><b>Máxima</b></label>
                             </div>
-                            <div class="input-field col s12 m6 l6">
+                            <div class="input-field col s12 m4 l4">
                                 <input disabled value="0" id="velocidadeMinima" type="text" class="validate">
                                 <label for="velocidadeMinima"><b>Mínima</b></label>
+                            </div>
+                            <div class="input-field col s12 m4 l4">
+                                <input disabled value="0" id="velocidadeMedia" type="text" class="validate">
+                                <label for="velocidadeMedia"><b>Média</b></label>
                             </div>
                         </div>
                     </fieldset>
@@ -286,13 +290,17 @@
                     <fieldset>
                         <legend>Potência</legend>
                         <div class="row">
-                            <div class="input-field col s12 m6 l6">
+                            <div class="input-field col s12 m4 l4">
                                 <input disabled value="0" id="potenciaMaxima" type="text" class="validate">
                                 <label for="potenciaMaxima"><b>Máxima</b></label>
                             </div>
-                            <div class="input-field col s12 m6 l6">
+                            <div class="input-field col s12 m4 l4">
                                 <input disabled value="0" id="potenciaMinima" type="text" class="validate">
                                 <label for="potenciaMinima"><b>Mínima</b></label>
+                            </div>
+                            <div class="input-field col s12 m4 l4">
+                                <input disabled value="0" id="potenciaMedia" type="text" class="validate">
+                                <label for="potenciaMedia"><b>Média</b></label>
                             </div>
                         </div>
                     </fieldset>
@@ -414,7 +422,7 @@
 
 
 
-    <footer class="page-footer red">
+    <footer class="page-footer green">
         <div class="footer-copyright green">
             Powered by <a class="orange-text text-lighten-3" target="_blank" href="http://www.videira.ifc.edu.br">IFC Videira</a>
         </div>
@@ -424,10 +432,6 @@
     <!-- jQuery -->
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
-
-    <!-- JS - JustGage -->
-    <!-- <script type="text/javascript" src="bower_components/justgage/justgage.js"></script> -->
-    <!-- <script type="text/javascript" src="bower_components/raphael/raphael.min.js"></script> -->
 
     <script type="text/javascript" src="assets/js/gauge.min.js"></script>
 
@@ -442,7 +446,7 @@
     <script type="text/javascript" src="assets/js/material-gauge.js"></script>
 
     <script type="text/javascript" src="assets/js/configuraMostradores.js"></script>
-
+    <script type="text/javascript" src="assets/js/medicao.js"></script>
     <script type="text/javascript" src="assets/js/conexao.js"></script>
     <script type="text/javascript" src="assets/js/configuraAcoes.js"></script>
 

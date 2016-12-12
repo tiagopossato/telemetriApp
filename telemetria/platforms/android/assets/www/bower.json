@@ -16,8 +16,6 @@
   ],
   "dependencies": {
     "materialize": "^0.97.8",
-    "odometer": "^0.4.7",
-    "justgage": "*",
-    "raphael": "^2.2.7"
+    "odometer": "^0.4.7"
   }
 }
