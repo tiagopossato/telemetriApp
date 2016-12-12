@@ -12,7 +12,59 @@ var medicao = {
     velocidadeMinima: 500.0,
     potencia: 0.0,
     potenciaMaxima: 0.0,
-    potenciaMinima: 500.0
+    potenciaMinima: 500.0,
+
+    setTensaoMaxima: function(t) {
+        medicao.tensaoMaxima = t;
+        $("#tensaoMaxima").val(t);
+    },
+    setTensaoMinima: function(t) {
+        medicao.tensaoMinima = t;
+        $("#tensaoMinima").val(t);
+    },
+
+    setCorrenteMaxima: function(c) {
+        medicao.correnteMaxima = c;
+        $("#correnteMaxima").val(c);
+
+    },
+    setCorrenteMinima: function(c) {
+        medicao.correnteMinima = c;
+        $("#correnteMinima").val(c);
+    },
+    setVelocidadeMaxima: function(v) {
+        this.velocidadeMaxima = v;
+        $("#velocidadeMaxima").val(v);
+    },
+    setVelocidadeMinima: function(v) {
+        medicao.velocidadeMinima = v;
+        $("#velocidadeMinima").val(v);
+    },
+
+    setPotenciaMaxima: function(p) {
+        medicao.potenciaMaxima = p;
+        $("#potenciaMaxima").val(p);
+    },
+    setPotenciaMinima: function(p) {
+        medicao.potenciaMinima = p;
+        $("#potenciaMinima").val(p);
+    },
+
+    zerarEstatisticas: function() {
+        medicao.setTensaoMaxima(0);
+        medicao.setTensaoMinima(500);
+        $("#tensaoMinima").val(0);
+        medicao.setCorrenteMaxima(0);
+        medicao.setCorrenteMinima(500);
+        $("#correnteMinima").val(0);
+        medicao.setVelocidadeMaxima(0);
+        medicao.setVelocidadeMinima(500);
+        $("#velocidadeMinima").val(0);
+        medicao.setPotenciaMaxima(0);
+        medicao.setPotenciaMinima(500);
+        $("#potenciaMinima").val(0);
+
+    }
 };
 
 function conecta() {
@@ -83,10 +135,10 @@ function trataDadosRecebidos(e) {
         medicao.tensao = parseFloat(dados['01']).toFixed(2);
 
         if (medicao.tensao > medicao.tensaoMaxima) {
-            medicao.tensaoMaxima = medicao.tensao;
+            medicao.setTensaoMaxima(medicao.tensao);
         }
         if (medicao.tensao < medicao.tensaoMinima) {
-            medicao.tensaoMinima = medicao.tensao;
+            medicao.setTensaoMinima(medicao.tensao);
         }
 
         medidorTensao.value(converte(medicao.tensao, 0.0, 50.0));
@@ -96,10 +148,10 @@ function trataDadosRecebidos(e) {
         medicao.corrente = parseFloat(dados['02']).toFixed(2);
 
         if (medicao.corrente > medicao.correnteMaxima) {
-            medicao.correnteMaxima = medicao.corrente;
+            medicao.setCorrenteMaxima(medicao.corrente);
         }
         if (medicao.corrente < medicao.correnteMinima) {
-            medicao.correnteMinima = medicao.corrente;
+            medicao.setCorrenteMinima(medicao.corrente);
         }
         medidorCorrente.value(converte(medicao.corrente, 0.0, 50.0));
         $('#medidorCorrenteTexto').html(parseFloat(medicao.corrente));
@@ -107,10 +159,10 @@ function trataDadosRecebidos(e) {
     if (dados['03'] != null) {
         medicao.velocidade = parseFloat(dados['03']).toFixed(2);
         if (medicao.velocidade > medicao.velocidadeMaxima) {
-            medicao.velocidadeMaxima = medicao.velocidade;
+            medicao.setVelocidadeMaxima(medicao.velocidade);
         }
         if (medicao.velocidade < medicao.velocidadeMinima) {
-            medicao.velocidadeMinima = medicao.velocidade;
+            medicao.setVelocidadeMinima(medicao.velocidade);
         }
 
         velocimetro.value(converte(medicao.velocidade, 0, 50));
@@ -141,14 +193,14 @@ function trataDadosRecebidos(e) {
 
     //Calcula potencia instantânea
     if (!isNaN(medicao.tensao) && medicao.tensao > 0.1 && !isNaN(medicao.corrente) && medicao.corrente > 0.01) {
-      medicao.potencia = parseFloat(medicao.tensao * medicao.corrente).toFixed(2);
+        medicao.potencia = parseFloat(medicao.tensao * medicao.corrente).toFixed(2);
 
-      if (medicao.potencia > medicao.potenciaMaxima) {
-          medicao.potenciaMaxima = medicao.potencia;
-      }
-      if (medicao.potencia < medicao.potenciaMinima) {
-          medicao.potenciaMinima = medicao.potencia;
-      }
+        if (medicao.potencia > medicao.potenciaMaxima) {
+            medicao.setPotenciaMaxima(medicao.potencia);
+        }
+        if (medicao.potencia < medicao.potenciaMinima) {
+            medicao.setPotenciaMinima(medicao.potencia);
+        }
 
         wattimetro.value(converte(medicao.potencia, 0, 1500));
         $('#wattimetroTexto').html(medicao.potencia);

@@ -1,22 +1,6 @@
 var ws;
 
-var medicao = {
-    tensao: 0.0,
-    tensaoMaxima: 0.0,
-    tensaoMinima: 500.0,
-    corrente: 0.0,
-    correnteMaxima: 500.0,
-    correnteMinima: 0.0,
-    velocidade: 0.0,
-    velocidadeMaxima: 0.0,
-    velocidadeMinima: 500.0,
-    potencia: 0.0,
-    potenciaMaxima: 0.0,
-    potenciaMinima: 500.0
-};
-
 function conecta() {
-
     try {
         ws = new WebSocket('ws://' + $("#ipTelemetria").val() + ':81');
     } catch (err) {
@@ -80,41 +64,19 @@ function trataDadosRecebidos(e) {
     }
 
     if (dados['01'] != null) {
-        medicao.tensao = parseFloat(dados['01']).toFixed(2);
-
-        if (medicao.tensao > medicao.tensaoMaxima) {
-            medicao.tensaoMaxima = medicao.tensao;
-        }
-        if (medicao.tensao < medicao.tensaoMinima) {
-            medicao.tensaoMinima = medicao.tensao;
-        }
-
+        medicao.setTensao(parseFloat(dados['01']));
         medidorTensao.value(converte(medicao.tensao, 0.0, 50.0));
-        $('#medidorTensaoTexto').html(parseFloat(medicao.tensao));
+        $('#medidorTensaoTexto').html(medicao.tensao.toFixed(2));
     }
     if (dados['02'] != null) {
-        medicao.corrente = parseFloat(dados['02']).toFixed(2);
-
-        if (medicao.corrente > medicao.correnteMaxima) {
-            medicao.correnteMaxima = medicao.corrente;
-        }
-        if (medicao.corrente < medicao.correnteMinima) {
-            medicao.correnteMinima = medicao.corrente;
-        }
+        medicao.setCorrente(parseFloat(dados['02']));
         medidorCorrente.value(converte(medicao.corrente, 0.0, 50.0));
-        $('#medidorCorrenteTexto').html(parseFloat(medicao.corrente));
+        $('#medidorCorrenteTexto').html(medicao.corrente.toFixed(2));
     }
     if (dados['03'] != null) {
-        medicao.velocidade = parseFloat(dados['03']).toFixed(2);
-        if (medicao.velocidade > medicao.velocidadeMaxima) {
-            medicao.velocidadeMaxima = medicao.velocidade;
-        }
-        if (medicao.velocidade < medicao.velocidadeMinima) {
-            medicao.velocidadeMinima = medicao.velocidade;
-        }
-
+        medicao.setVelocidade(parseFloat(dados['03']));
         velocimetro.value(converte(medicao.velocidade, 0, 50));
-        $('#velocimetroTexto').html(medicao.velocidade);
+        $('#velocimetroTexto').html(medicao.velocidade.toFixed(2));
     }
     if (dados['04'] != null) {
         var distancia = parseFloat(dados['04']);
@@ -122,17 +84,15 @@ function trataDadosRecebidos(e) {
     }
 
     if (dados['05'] != null) {
-        var temp = parseFloat(dados['05']).toFixed(2);
-        // temperaturaBaterias.refresh(temp);
+        var temp = parseFloat(dados['05']);
         temperaturaBaterias.value(converte(temp, 0, 100));
-        $('#temperaturaBateriasTexto').html(temp);
+        $('#temperaturaBateriasTexto').html(temp.toFixed(2));
     }
 
     if (dados['06'] != null) {
-        var temp = parseFloat(dados['06']).toFixed(2);
-        // temperaturaCockpit.refresh(temp);
+        var temp = parseFloat(dados['06']);
         temperaturaCockpit.value(converte(temp, 0, 100));
-        $('#temperaturaCockpitTexto').html(temp);
+        $('#temperaturaCockpitTexto').html(temp.toFixed(2));
     }
 
     if (dados['20'] != null) {
@@ -141,17 +101,9 @@ function trataDadosRecebidos(e) {
 
     //Calcula potencia instantânea
     if (!isNaN(medicao.tensao) && medicao.tensao > 0.1 && !isNaN(medicao.corrente) && medicao.corrente > 0.01) {
-      medicao.potencia = parseFloat(medicao.tensao * medicao.corrente).toFixed(2);
-
-      if (medicao.potencia > medicao.potenciaMaxima) {
-          medicao.potenciaMaxima = medicao.potencia;
-      }
-      if (medicao.potencia < medicao.potenciaMinima) {
-          medicao.potenciaMinima = medicao.potencia;
-      }
-
+        medicao.setPotencia(parseFloat(medicao.tensao * medicao.corrente));
         wattimetro.value(converte(medicao.potencia, 0, 1500));
-        $('#wattimetroTexto').html(medicao.potencia);
+        $('#wattimetroTexto').html(medicao.potencia.toFixed(2));
         //calcula consumo instantâneo
         if (!isNaN(medicao.velocidade) && medicao.velocidade > 0) {
             // consumoInstantaneo.refresh(tensao * medicao.corrente / velocidade);

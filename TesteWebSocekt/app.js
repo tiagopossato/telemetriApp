@@ -12,24 +12,24 @@ var server = ws.createServer(function (conn) {
 	try{
 		console.log("Received "+str)
 		var i1 = setInterval(function(){
-			try{conn.sendText("{\"03\":"+getRandomArbitrary(0,100)+"}")}catch(e){clearInterval(i1);console.log(e)}
-			},100);
+			try{conn.sendText("{\"03\":"+getRandomArbitrary(0,50)+"}")}catch(e){clearInterval(i1);console.log(e)}
+			},750);
 		var i2 = setInterval(function(){
 			try{conn.sendText("{\"01\":"+getRandomArbitrary(0,50)+"}")}catch(e){clearInterval(i2);console.log(e)}
-			},100);
+			},750);
 		var i3 = setInterval(function(){
 			try{conn.sendText("{\"02\":"+getRandomArbitrary(0,30)+"}")}catch(e){clearInterval(i3);console.log(e)}			
-			},100);
+			},750);
 		var i4 = setInterval(function(){
 			try{conn.sendText("{\"04\":"+d+"}")}catch(e){clearInterval(i4);console.log(e)}
 			d++;
-			},100);
+			},750);
 		var i5 = setInterval(function(){
 			try{conn.sendText("{\"05\":"+getRandomArbitrary(0,35)+"}")}catch(e){clearInterval(i5);console.log(e)}
-			},100);        
+			},750);        
 		var i6 = setInterval(function(){
 			try{conn.sendText("{\"06\":"+getRandomArbitrary(0,43)+"}")}catch(e){clearInterval(i6);console.log(e)}			
-			},100);
+			},750);
 	}catch(e){
 		console.log(e);
 	}

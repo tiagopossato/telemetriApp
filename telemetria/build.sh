@@ -1,1 +1,1 @@
-cordova build android -- --gradleArg=-PcdvMinSdkVersion=20
+cordova build android --gradleArg=-PcdvMinSdkVersion=20

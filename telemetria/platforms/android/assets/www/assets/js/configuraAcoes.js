@@ -47,7 +47,8 @@ $(document).ready(function() {
         // impede o envio do form
     });
 
-    $("#botaoTelaCheia").click(toggleFullScreen);
+    // $("#botaoTelaCheia").click(toggleFullScreen);
+        $("#botaoZerarEstatisticas").click(medicao.zerarEstatisticas);
 
     $("#botaoConectar").click(conecta);
 
