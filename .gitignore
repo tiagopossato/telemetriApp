@@ -1,7 +1,4 @@
-#!telemetria/platforms/android/res/*
-#telemetria/platforms/*
-#telemetria/hooks/*
-#telemetria/plugins/*
+telemetria/platforms/browser/*
 
 !telemetria/www/*
 
